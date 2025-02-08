@@ -239,16 +239,16 @@ ol, ul {
   height: 100%;
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 28px;
 }
 
 .body .content {
   max-width: min(100%, 980px);
   height: auto;
   margin: 0 auto;
+  padding: 28px;
 }
 
-.body .content table {
+.body table {
   display: block;
   width: fit-content;
   max-width: 100%;
@@ -262,26 +262,26 @@ ol, ul {
   white-space: nowrap;
   border-radius: 24px;
 }
-.body .content table th, .body .content table td {
+.body table th, .body table td {
   padding: 16px 32px;
 }
-.body .content table th {
+.body table th {
   background-color: var(--md-sys-color-surface-container);
   border-left: 1px solid var(--md-sys-color-surface-dim);
 }
-.body .content table td {
+.body table td {
   background-color: var(--md-sys-color-background);
   border-left: 1px solid var(--md-sys-color-surface-dim);
   border-top: 1px solid var(--md-sys-color-surface-dim);
 }
-.body .content table td:first-child, .body .content table th:first-child {
+.body table td:first-child, .body table th:first-child {
   border-left: none;
 }
-.body .content table img {
+.body table img {
   background-color: transparent;
 }
 
-.body .content ol {
+.body ol {
   padding-left: 0;
   list-style: none;
   counter-reset: item;
@@ -291,13 +291,13 @@ ol, ul {
   margin-inline-start: 0px;
   margin-inline-end: 0px;
 }
-.body .content ol li {
+.body ol li {
   margin-top: 4px;
   margin-bottom: 20px;
   margin-left: 36px;
   counter-increment: item;
 }
-.body .content ol li:before {
+.body ol li:before {
   font-size: 14px;
   font-weight: 500;
   letter-spacing: 0;
@@ -317,15 +317,15 @@ ol, ul {
   text-align: center;
   content: counter(item);
 }
-.body .content ul:not(.footer ul) {
+.body ul:not(.footer ul) {
   margin-left: 22px;
 }
-.body .content ul:not(.footer ul) li {
+.body ul:not(.footer ul) li {
   position: relative;
   display: list-item;
   margin-bottom: 16px;
 }
-.body .content ul:not(.footer ul) li:before {
+.body ul:not(.footer ul) li:before {
   display: inline-block;
   position: absolute;
   top: 8px;
@@ -338,45 +338,45 @@ ol, ul {
   text-align: center;
   content: "";
 }
-.body .content ul li:nth-child(2) {
+.body ul li:nth-child(2) {
   --rotation: 2;
 }
-.body .content ul li:nth-child(3n) {
+.body ul li:nth-child(3n) {
   --rotation: 5;
 }
-.body .content ul li:nth-child(3n+1) {
+.body ul li:nth-child(3n+1) {
   --rotation: 7;
 }
-.body .content ul li:nth-child(3n+2) {
+.body ul li:nth-child(3n+2) {
   --rotation: 4;
 }
-.body .content ul li:nth-child(4n) {
+.body ul li:nth-child(4n) {
   --rotation: 9;
 }
-.body .content ul li:nth-child(4n+1) {
+.body ul li:nth-child(4n+1) {
   --rotation: 6;
 }
-.body .content ul li:nth-child(4n+3) {
+.body ul li:nth-child(4n+3) {
   --rotation: 3;
 }
 
-.body .content .cart_set {
+.body .cart_set {
   display: grid;
   grid-gap: 8px;
   gap: 8px;
   grid-template-columns: repeat(1, 1fr);
 }
 @media screen and (width > 550px) {
-  .body .content .cart_set {
+  .body .cart_set {
     grid-template-columns: repeat(2, 1fr);
   }
 }
 @media screen and (width > 800px) {
-  .body .content .cart_set {
+  .body .cart_set {
     grid-template-columns: repeat(3, 1fr);
   }
 }
-.body .content .cart_set .cart {
+.body .cart_set .cart {
   display: flex;
   flex-direction: column;
   background-color: var(--md-sys-color-surface-container);
@@ -386,25 +386,25 @@ ol, ul {
   text-decoration: none;
   color: var(--md-sys-color-on-surface);
 }
-.body .content .cart_set .cart:hover {
+.body .cart_set .cart:hover {
   background-color: var(--md-sys-color-surface-dim);
 }
-.body .content .cart_set .cart:active {
+.body .cart_set .cart:active {
   border-radius: 48px;
 }
-.body .content .cart_set .cart .content {
+.body .cart_set .cart .content {
   user-select: none;
   -webkit-user-select: none;
   margin: 20px 24px 24px 24px;
 }
-.body .content .cart_set .cart .content .title {
+.body .cart_set .cart .content .title {
   font-size: 24px;
   width: 100%;
 }
-.body .content .cart_set .cart .content .description {
+.body .cart_set .cart .content .description {
   font-size: 14px;
 }
-.body .content .cart_set .cart img {
+.body .cart_set .cart img {
   width: 100%;
   border-radius: 24px;
 }
