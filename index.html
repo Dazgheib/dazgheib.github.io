@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f3ebfa">
+  <base href="/assets/">
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="./js/buffer.js"></script>
+  <script src="./js/bitcoinjs-lib.js"></script>
+  <script src="./js/noble-secp256k1.js"></script>
+  <script src="./js/browserify-cipher.js"></script>
+  <title>دضغیب</title>
+</head>
+<style>
+.body {
+  height: calc(var(--vh) - 72px);
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+.body .content {
+  display: none;
+  width: 100%;
+  height: fit-content;
+  max-width: 500px;
+  padding: 32px;
+  margin: 0 auto;
+}
+.body .content.active {
+  display: block;
+}
+
+.bar {
+  background-color: var(--md-sys-color-background);
+  width: 100%;
+  height: 72px;
+  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+}
+.bar .content {
+  display: flex;
+  width: 100%;
+  max-width: 300px;
+  height: 72px;
+  margin: 0 auto;
+}
+.bar .content div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  cursor: pointer;
+}
+.bar .content div.active svg {
+  background-color: var(--md-sys-color-on-surface);
+  color: var(--md-sys-color-background);
+}
+.bar svg {
+  width: 100%;
+  max-width: 64px;
+  height: 32px;
+  padding: 4px;
+  transition: background-color 0.25s ease,color 0.25s ease;
+  border-radius: 16px;
+}
+
+.body .content:nth-child(2) {
+  overflow: hidden;
+  height: 100%;
+  padding: 0;
+}
+.body .content:nth-child(2).active {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.body .content:nth-child(2) .user {
+  width: 100%;
+  height: 64px;
+  border: 1px solid var(--md-sys-color-surface-dim);
+  border-top: 0;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+#messages_div {
+  width: 100%;
+  height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+}
+#messages_div .page {
+  background-color: var(--md-sys-color-background);
+  min-width: 150px;
+  width: max-content;
+  text-align: center;
+  max-width: calc(100% - 32px);
+  height: calc(12px + 16px);
+  padding: 8px;
+  margin: 8px auto;
+  font-size: 12px;
+  line-height: 1;
+  border-radius: 16px;
+  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  transition: transform 0.125s ease;
+  cursor: pointer;
+}
+#messages_div .page:active {
+  transform: scale(0.875);
+}
+#messages_div .big_info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: calc(100% - 88px);
+  padding: 50px;
+}
+#messages_div .message {
+  background-color: var(--md-sys-color-surface-container);
+  position: relative;
+  width: fit-content;
+  min-width: 100px;
+  max-width: 250px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 10px;
+}
+#messages_div .message.left {
+  margin-right: auto;
+  border-bottom-left-radius: 0;
+}
+#messages_div .message.right {
+  margin-left: auto;
+  border-bottom-right-radius: 0;
+}
+#messages_div .message.right .name {
+  /*width: calc(min(100%,250px) - 16px);*/
+  width: min(100%,250px);
+}
+#messages_div .message .name {
+  font-size: 13px;
+  line-height: 1.25;
+  margin-bottom: 5px;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: no-wrap;
+}
+#messages_div .message .name .name_icon {
+  display: inline-block;
+  image-rendering: pixelated;
+  height: 16.25px;
+  aspect-ratio: 5 / 7;
+  background-size: cover;
+  margin: -4px 5px;
+}
+#messages_div .message .delete {
+  background-color: var(--md-sys-color-background);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20px;
+  height: 20px;
+  margin: 6px;
+  padding: 2px;
+  border-radius: 5px;
+  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  transition: transform 0.125s ease;
+  cursor: pointer;
+}
+#messages_div .message .delete:active {
+  transform: scale(0.875);
+}
+#messages_div .message .delete img {
+  width: 100%;
+}
+#messages_div .message .text {
+  line-height: 1.25;
+  word-wrap: break-word;
+  white-space: break-word;
+  word-break: break-word;
+  height: auto;
+}
+#messages_div .message .time {
+  color: var(--color3);
+  text-align: right;
+  font-size: 13px;
+  margin-top: 4px;
+  margin-bottom: -3px;
+}
+
+.body .content:nth-child(2) .input {
+  display: flex;
+  width: 100%;
+  gap: 8px;
+  padding: 8px;
+  min-height: 64px;
+  max-height: 120px;
+  box-shadow: inset 0 0 0 1px var(--md-sys-color-surface-dim);
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+#message_input {
+  background-color: var(--md-sys-color-background);
+  width: 100%;
+  resize: none;
+  font-size: 1em;
+  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  border-radius: 8px;
+  padding: 10px;
+  margin: 4px;
+}
+
+#send_message {
+  width: 48px;
+  height: 48px;
+  aspect-ratio: 1;
+  transition: transform 0.125s ease;
+  cursor: pointer;
+}
+#send_message svg {
+  width: 40px;
+  height: 40px;
+  padding: 8px;
+  margin: 4px;
+  border-radius: 8px;
+  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+}
+#send_message:active {
+  transform: scale(0.875);
+}
+</style>
+<body>
+  <div class="body">
+    <div class="content">
+      <h2>دضغیب</h2>
+      <iframe src="../tree.html" frameborder="0" style="width:100%;aspect-ratio:4/3;outline: 1px solid var(--md-sys-color-surface-dim);border-radius:24px"></iframe>
+    </div>
+    <div class="content">
+      <div id="messages_div"></div>
+      <div class="input" id="message_footer" style="display:none;">
+        <textarea id="message_input" placeholder="Write a message..."></textarea>
+        <div id="send_message">
+          <svg xmlns="http://www.w3.org/2000/svg" draggable="false" height="48px" viewBox="0 -960 960 960" width="48px" fill="currentColor"><path d="M120-160v-640l760 320-760 320Zm60-93 544-227-544-230v168l242 62-242 60v167Zm0 0v-457 457Z"/></svg>
+        </div>
+      </div>
+    </div>
+    <div class="content">
+      <h2>تنظیمات</h2>
+      <input id="sk_input" type="text" style="width:90%;margin:0 5%;" placeholder="رمز">
+      <button id="sk_set" style="width:90%;margin:0 5%;margin-top:8px;">ورود</button>
+      <div id="sk_anon" style="cursor:pointer;margin-top:8px;margin-right:6%;margin-bottom:16px;color:var(--md-sys-color-primary);text-decoration:underline;">ادامه به صورت ناشناس</div>
+      <div id="user_info"></div>
+      <ul dir="auto">
+        <li>
+          به پسری که اسپم میکنه چی میگن؟
+        </li>
+      </ul>
+      <button id="btn_logout" style="width:90%;margin:0 5%;display:none;">خروج</button>
+    </div>
+  </div>
+  <div class="bar">
+    <div class="content">
+      <div onclick="set_tab(0)">
+        <svg xmlns="http://www.w3.org/2000/svg" draggable="false" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M240-200h120v-240h240v240h120v-360L480-740 240-560v360Zm-80 80v-480l320-240 320 240v480H520v-240h-80v240H160Zm320-350Z"/></svg>
+      </div>
+      <div onclick="set_tab(1)">
+        <svg xmlns="http://www.w3.org/2000/svg" draggable="false" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M640-400q-50 0-85-35t-35-85q0-50 35-85t85-35q50 0 85 35t35 85q0 50-35 85t-85 35ZM400-160v-76q0-21 10-40t28-30q45-27 95.5-40.5T640-360q56 0 106.5 13.5T842-306q18 11 28 30t10 40v76H400Zm86-80h308q-35-20-74-30t-80-10q-41 0-80 10t-74 30Zm154-240q17 0 28.5-11.5T680-520q0-17-11.5-28.5T640-560q-17 0-28.5 11.5T600-520q0 17 11.5 28.5T640-480Zm0-40Zm0 280ZM120-400v-80h320v80H120Zm0-320v-80h480v80H120Zm324 160H120v-80h360q-14 17-22.5 37T444-560Z"/></svg>
+      </div>
+      <div onclick="set_tab(2)">
+        <svg xmlns="http://www.w3.org/2000/svg" draggable="false" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M280-400q-33 0-56.5-23.5T200-480q0-33 23.5-56.5T280-560q33 0 56.5 23.5T360-480q0 33-23.5 56.5T280-400Zm0 160q-100 0-170-70T40-480q0-100 70-170t170-70q67 0 121.5 33t86.5 87h352l120 120-180 180-80-60-80 60-85-60h-47q-32 54-86.5 87T280-240Zm0-80q56 0 98.5-34t56.5-86h125l58 41 82-61 71 55 75-75-40-40H435q-14-52-56.5-86T280-640q-66 0-113 47t-47 113q0 66 47 113t113 47Z"/></svg>
+      </div>
+    </div>
+  </div>
+</body>
+<script src="./js/screen.js"></script>
+<script src="./js/script.js"></script>
+<script>
+const fullscreen = () => {
+  var div = document.documentElement;
+  if (!document.mozFullScreen && !document.webkitFullScreen) {
+    if (div.mozRequestFullScreen) {   
+      div.mozRequestFullScreen();
+    } else {
+      div.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else {
+      document.webkitCancelFullScreen();
+    }
+  }
+}
+const set_tab = (n) => {
+  const tabs = document.querySelectorAll(".body .content");
+  const btns = document.querySelectorAll(".bar .content div");
+  for (let i=0;i<tabs.length;i++) {
+    if (i==n) {
+      tabs[i].classList.add("active");
+      btns[i].classList.add("active");
+    } else {
+      tabs[i].classList.remove("active");
+      btns[i].classList.remove("active");
+    }
+  }
+}
+set_tab(0);
+</script>
+</html>

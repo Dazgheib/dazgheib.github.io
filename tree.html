@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tree</title>
+</head>
+<style>
+@font-face {
+  font-family: "en";
+  src: url("./assets/fonts/regular.woff2");
+}
+@font-face {
+  font-family: "mono";
+  src: url("./assets/fonts/mono.woff2");
+}
+@font-face {
+  font-family: "fa";
+  src: url("./assets/fonts/estedad.woff2");
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+body {
+  margin: 0px;
+  font-family: "en","fa";
+}
+#screen {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fef7ff;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+}
+.tree {
+  width: fit-content;
+  height: fit-content;
+  white-space: nowrap;
+  transform-origin: center;
+}
+.tree ul {
+  padding-top: 20px;
+  position: relative;
+}
+.tree li {
+  text-align: center;
+  list-style-type: none;
+  position: relative;
+  padding: 20px 5px 0 5px;
+  float: none;
+  display: inline-block;
+  vertical-align: top;
+  white-space: nowrap;
+  margin: 0 -2px 0 -2px;
+}
+.tree li::before,
+.tree li::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 50%;
+  border-top: 1px solid #dfd7e6;
+  width: 50%;
+  height: 20px;
+}
+.tree li::after {
+  right: auto;
+  left: 50%;
+  border-left: 1px solid #dfd7e6;
+}
+.tree li:only-child::after,
+.tree li:only-child::before {
+  display: none;
+}
+.tree li:only-child {
+  padding-top: 0;
+}
+.tree li:first-child::before,
+.tree li:last-child::after {
+  border: none;
+}
+.tree li:last-child::before {
+  border-right: 1px solid #dfd7e6;
+  border-radius: 0 8px 0 0;
+}
+.tree li:first-child::after {
+  border-radius: 8px 0 0 0;
+}
+.tree ul ul::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 50%;
+  border-left: 1px solid #dfd7e6;
+  width: 0;
+  height: 20px;
+}
+.tree li div {
+  user-select: none;
+  display: inline-block;
+  background-color: #fef7ff;
+  color: #000;
+  font-size: 16px;
+  border: 1px solid #dfd7e6;
+  padding: 16px;
+  border-radius: 8px;
+  transition: all 0.5s;
+  -webkit-transition: all 0.5s;
+  -moz-transition: all 0.5s;
+}
+/*.tree li div:hover,
+.tree li div:hover+ul li div {
+  background: #eee;
+  color: #000;
+  border: 1px solid #ddd;
+}
+.tree li div:hover+ul li::after,
+.tree li div:hover+ul li::before,
+.tree li div:hover+ul::before,
+.tree li div:hover+ul ul::before {
+  border-color: #ddd;
+}*/
+
+.fullbtn {
+  background-color: #fef7ff;
+  position: fixed;
+  right: 5vmin;
+  bottom: 5vmin;
+  width: 48px;
+  height: 48px;
+  border: 1px solid #dfd7e6;
+  border-radius: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.fullbtn svg {
+  width: 24px;
+  height: 24px;
+}
+
+</style>
+
+<body>
+  <div id="screen">
+    <div class="tree" id="tree"></div>
+  </div>
+  <div class="fullbtn" onclick="fullscreen()">
+    <svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="M120-120v-200h80v120h120v80H120Zm520 0v-80h120v-120h80v200H640ZM120-640v-200h200v80H200v120h-80Zm640 0v-120H640v-80h200v200h-80Z"/></svg>
+  </div>
+</body>
+
+<script>
+
+const fullscreen = () => {
+  const div = document.documentElement;
+  if (!document.mozFullScreen&&!document.webkitFullScreen) {
+    if (div.mozRequestFullScreen) {   
+      div.mozRequestFullScreen();
+    } else {
+      div.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
+    }
+  } else {
+    if (document.mozCancelFullScreen) {
+      document.mozCancelFullScreen();
+    } else {
+      document.webkitCancelFullScreen();
+    }
+  }
+}
+
+const parset = (text,indentSize) => {
+  const lines = text.split("\n");
+  const stack = [];
+  let root = null;
+  lines.forEach(line => {
+    if (!line.trim()) return;
+    const indent = line.search(/\S|$/);
+    const name = line.trim();
+    const level = Math.floor(indent/indentSize);
+    const node = { name };
+    if (level==0) {
+      root = node;
+      stack.length = 0;
+      stack.push(node);
+    } else {
+      while (stack.length>level) {
+        stack.pop();
+      }
+      const parent = stack[stack.length-1];
+      if (!parent.children) {
+        parent.children = [];
+      }
+      parent.children.unshift(node);
+      stack.push(node);
+    }
+  });
+  return root;
+}
+
+const data = parset(`
+دضغیب
+  ساختمان مدرسه
+    طبقه یک
+      یازدهمی ها
+        اتاق بازجویی
+          آقای زارع
+        تجربی
+          تجربی یک
+          تجربی دو
+          تجربی سه
+        ریاضی
+          ریاضی یک
+          ریاضی دو
+      نمازخانه
+    طبقه دو
+      دهمی ها
+      سالن اجتماعات
+    طبقه سه
+      سمنان
+  حیاط مدرسه
+    بوفه
+      آقای حسینی
+      سمبوسه
+        نان
+        روغن
+      بستنی
+    سایه بان
+      میز و صندلی
+      🐈
+    اتاق ورزش
+      آقای ورزش
+      توپ
+    زمین فوتبال
+      چمن
+      توپ
+      دروازه
+      دروازه
+    زمین والیبال
+    زمین بسکتبال
+`,2);
+
+const create_tree = (node) => {
+  const li = document.createElement("li");
+  const div = document.createElement("div");
+  div.textContent = node.name;
+  li.appendChild(div);
+  if (node.children&&node.children.length>0) {
+    const ul = document.createElement("ul");
+    node.children.forEach(child => {
+      ul.appendChild(create_tree(child));
+    });
+    li.appendChild(ul);
+  }
+  return li;
+}
+
+function renderTree(data) {
+  const ul = document.createElement("ul");
+  ul.appendChild(create_tree(data));
+  document.getElementById("tree").appendChild(ul);
+}
+
+renderTree(data);
+
+camera = {x:0,y:200,cx:0,cy:0,zoom:0.875,touch:false,drag:false};
+tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+
+screen = document.getElementById("screen");
+
+resize = () => {
+  const root = document.querySelector(":root");
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  root.style.setProperty("--vw",width+"px");
+  root.style.setProperty("--vh",height+"px");
+  root.style.setProperty("--vmin",(width<height?width:height)+"px");
+  root.style.setProperty("--vmax",(width>height?width:height)+"px");
+};
+window.addEventListener("resize",resize);
+resize();
+
+screen.addEventListener("touchstart",(e) => {
+  if (e.touches.length==2) {
+    e.preventDefault();
+    initialDistance = Math.hypot(
+      e.touches[1].clientX-e.touches[0].clientX,
+      e.touches[1].clientY-e.touches[0].clientY
+    );
+    camera.xo = (e.touches[1].clientX+e.touches[0].clientX)/2;
+    camera.yo = (e.touches[1].clientY+e.touches[0].clientY)/2;
+    camera.touch = true;
+  }
+  else {
+    camera.touch = false;
+    if (!camera.touch) {
+      camera.xo = e.touches[0].clientX;
+      camera.yo = e.touches[0].clientY;
+    }
+  }
+});
+screen.addEventListener("touchmove",(e) => {
+  if (e.touches.length==2) {
+    e.preventDefault();
+    const ndist = Math.hypot(
+      e.touches[1].clientX-e.touches[0].clientX,
+      e.touches[1].clientY-e.touches[0].clientY
+    );
+    camera.zoom *= ndist/initialDistance;
+    initialDistance = ndist;
+    camera.x += ((e.touches[1].clientX+e.touches[0].clientX)/2-camera.xo)/camera.zoom;
+    camera.y += ((e.touches[1].clientY+e.touches[0].clientY)/2-camera.yo)/camera.zoom;
+    camera.xo = (e.touches[1].clientX+e.touches[0].clientX)/2;
+    camera.yo = (e.touches[1].clientY+e.touches[0].clientY)/2;
+    camera.cx = camera.xo;
+    camera.cy = camera.yo;
+  }
+  else {
+    if (camera.touch!=true) {
+      camera.x += (e.touches[0].clientX-camera.xo)/camera.zoom;
+      camera.y += (e.touches[0].clientY-camera.yo)/camera.zoom;
+      camera.xo = e.touches[0].clientX;
+      camera.yo = e.touches[0].clientY;
+    }
+  }
+  tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+});
+screen.addEventListener("mousedown",(e) => {
+  camera.drag = true;
+  camera.xo = e.clientX;
+  camera.yo = e.clientY;
+  camera.touch = false;
+});
+screen.addEventListener("mousemove",(e) => {
+  if (camera.drag) {
+    camera.x += (e.clientX-camera.xo)/camera.zoom;
+    camera.y += (e.clientY-camera.yo)/camera.zoom;
+    camera.xo = e.clientX;
+    camera.yo = e.clientY;
+    tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+  }
+});
+screen.addEventListener("mouseup",() => {
+  camera.drag = false;
+});
+screen.addEventListener("mouseleave",() => {
+  camera.drag = false;
+});
+screen.addEventListener("wheel",(e) => {
+  e.preventDefault();
+  if (e.deltaY < 0) {
+    camera.zoom *= (1.125);
+  } else {
+    camera.zoom *= (0.875);
+  }
+  tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+});
+
+</script>
+</html>

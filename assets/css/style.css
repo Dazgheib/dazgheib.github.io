@@ -130,27 +130,30 @@ a:not(.cart):hover {
 }
 button {
   background-color: var(--md-sys-color-surface-container);
-  min-width: 72px;
+  min-width: 96px;
   width: fit-content;
   height: fit-content;
-  padding: 16px;
-  margin: 4px;
-  border-radius: 24px;
+  padding: 12px;
+  border-radius: 16px;
   transition: background-color .3s cubic-bezier(.2,0,0,1);
 }
 button:hover {
   background-color: var(--md-sys-color-surface-dim);
 }
-input[type="text"] {
+input[type="text"], input[type="password"] {
   background-color: var(--md-sys-color-background);
   font-size: 1em;
-  padding: 8px;
+  padding: 12px;
   outline: 1px solid var(--md-sys-color-surface-dim);
   border-radius: 8px;
   transition: outline .2s linear;
 }
-input[type="text"]:focus {
+input[type="text"]:focus, input[type="password"]:focus {
   outline: 3px solid var(--md-sys-color-primary-container);
+}
+input::placeholder {
+  text-align: auto !important;
+  unicode-bidi: plaintext !important;
 }
 .img {
   max-width: 100%;
@@ -329,7 +332,7 @@ ol, ul {
   display: inline-block;
   position: absolute;
   top: 8px;
-  left: -16px;
+  margin: 0 -16px;
   width: 8px;
   height: 8px;
   transform: rotate(calc(var(--rotation)* 36deg));
