@@ -162,11 +162,11 @@ body {
 
 const fullscreen = () => {
   if (!document.fullscreenElement) {
-    document.documentElement.requestFullscreen();
-  } else {
-    if (document.exitFullscreen) {
-      document.exitFullscreen();
-    }
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
   }
 }
 
@@ -202,7 +202,7 @@ const parset = (text,indentSize) => {
 const data = parset(`
 مدرسه
   ساختمان
-    طبقه یک
+    طبقه اول
       یازدهمی ها
         اتاق بازجویی
           آقای زارع
@@ -214,9 +214,9 @@ const data = parset(`
           ریاضی یک
           ریاضی دو
       نمازخانه
-    طبقه دو
+    طبقه دوم
       دهمی ها
-    طبقه سه
+    طبقه سوم
       دوازدهمی ها
       سالن اجتماعات
   حیاط
