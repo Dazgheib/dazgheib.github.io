@@ -156,19 +156,12 @@ body {
 <script>
 
 const fullscreen = () => {
-  const div = document.documentElement;
-  if (!document.mozFullScreen&&!document.webkitFullScreen) {
-    if (div.mozRequestFullScreen) {   
-      div.mozRequestFullScreen();
-    } else {
-      div.webkitRequestFullScreen(Element.ALLOW_KEYBOARD_INPUT);
-    }
-  } else {
-    if (document.mozCancelFullScreen) {
-      document.mozCancelFullScreen();
-    } else {
-      document.webkitCancelFullScreen();
-    }
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen();
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
   }
 }
 
@@ -202,8 +195,8 @@ const parset = (text,indentSize) => {
 }
 
 const data = parset(`
-دضغیب
-  ساختمان مدرسه
+مدرسه
+  ساختمان
     طبقه یک
       یازدهمی ها
         اتاق بازجویی
@@ -221,7 +214,7 @@ const data = parset(`
       سالن اجتماعات
     طبقه سه
       سمنان
-  حیاط مدرسه
+  حیاط
     بوفه
       آقای حسینی
       سمبوسه
