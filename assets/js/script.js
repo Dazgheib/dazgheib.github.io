@@ -263,6 +263,16 @@ const delete_msg = async (id) => {
 }
 
 const load_messages = () => {
+  const date_info = (date) => {
+    const cy = new Date().getFullYear();
+    const y = date.getFullYear();
+    const fd = date.toLocaleDateString("en-US",{month:"long",day:"numeric"});
+    if (y==cy) {
+      return fd;
+    } else {
+      return `${fd},${y}`;
+    }
+  }
   messages = messages.sort((a,b)=>(a.created_at>b.created_at)?1:-1);
   if (messages.length>msg_limit) {
     messages.splice(0,messages.length-msg_limit);
@@ -270,6 +280,12 @@ const load_messages = () => {
   messages_div.innerHTML = "";
 
   for (let i=0;i<messages.length;i++) {
+    if ((messages[i].created_at-(i>0?messages[i-1].created_at:0))>60*60*24) {
+      const date = document.createElement("div");
+      date.classList.add("info");
+      date.innerText = date_info(new Date(messages[i].created_at*1000));
+      messages_div.appendChild(date);
+    }
     const message = document.createElement("div");
     message.classList.add("message");
     if (messages[i].pubkey==user.pk) {
