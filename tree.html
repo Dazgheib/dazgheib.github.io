@@ -256,18 +256,13 @@ const create_tree = (node) => {
   return li;
 }
 
-function renderTree(data) {
+const render_tree = (data) => {
   const ul = document.createElement("ul");
   ul.appendChild(create_tree(data));
   document.getElementById("tree").appendChild(ul);
 }
 
-renderTree(data);
-
-camera = {x:0,y:200,cx:0,cy:0,zoom:0.875,touch:false,drag:false};
-tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
-
-screen = document.getElementById("screen");
+render_tree(data);
 
 resize = () => {
   const root = document.querySelector(":root");
@@ -281,15 +276,24 @@ resize = () => {
 window.addEventListener("resize",resize);
 resize();
 
+const camera = {x:0,y:200,z:0.875,max:0.5,min:10};
+
+const sett = () => {
+  tree.style.transform = "scale("+camera.z+") translateX("+camera.x+"px) translateY("+camera.y+"px) rotateZ("+camera.r+"deg)";
+}
+sett();
+
 screen.addEventListener("touchstart",(e) => {
+  e.preventDefault();
   if (e.touches.length==2) {
-    e.preventDefault();
-    initialDistance = Math.hypot(
-      e.touches[1].clientX-e.touches[0].clientX,
-      e.touches[1].clientY-e.touches[0].clientY
+    camera.do = Math.hypot(
+      e.touches[0].clientX-e.touches[1].clientX,
+      e.touches[0].clientY-e.touches[1].clientY
     );
-    camera.xo = (e.touches[1].clientX+e.touches[0].clientX)/2;
-    camera.yo = (e.touches[1].clientY+e.touches[0].clientY)/2;
+    camera.xo = (e.touches[0].clientX+e.touches[1].clientX)/2;
+    camera.yo = (e.touches[0].clientY+e.touches[1].clientY)/2;
+    camera.cx = camera.xo;
+    camera.cy = camera.yo;
     camera.touch = true;
   }
   else {
@@ -301,31 +305,37 @@ screen.addEventListener("touchstart",(e) => {
   }
 });
 screen.addEventListener("touchmove",(e) => {
+  e.preventDefault();
   if (e.touches.length==2) {
-    e.preventDefault();
     const ndist = Math.hypot(
-      e.touches[1].clientX-e.touches[0].clientX,
-      e.touches[1].clientY-e.touches[0].clientY
+      e.touches[0].clientX-e.touches[1].clientX,
+      e.touches[0].clientY-e.touches[1].clientY
     );
-    camera.zoom *= ndist/initialDistance;
-    initialDistance = ndist;
-    camera.x += ((e.touches[1].clientX+e.touches[0].clientX)/2-camera.xo)/camera.zoom;
-    camera.y += ((e.touches[1].clientY+e.touches[0].clientY)/2-camera.yo)/camera.zoom;
-    camera.xo = (e.touches[1].clientX+e.touches[0].clientX)/2;
-    camera.yo = (e.touches[1].clientY+e.touches[0].clientY)/2;
-    camera.cx = camera.xo;
-    camera.cy = camera.yo;
+    const nz = Math.max(Math.min(camera.z*ndist/camera.do,camera.min),camera.max);
+    camera.do = ndist;
+    const mx = (e.touches[0].clientX+e.touches[1].clientX)/2;
+    const my = (e.touches[0].clientY+e.touches[1].clientY)/2;
+    const ox =  mx-screen.clientWidth/2;
+    const oy = my-screen.clientHeight/2;
+    camera.x -= (ox/camera.z-ox/nz)-(mx-camera.cx)/nz;
+    camera.y -= (oy/camera.z-oy/nz)-(my-camera.cy)/nz;
+    camera.xo = ox;
+    camera.yo = oy;
+    camera.cx = mx;
+    camera.cy = my;
+    camera.z = nz;
   }
   else {
     if (camera.touch!=true) {
-      camera.x += (e.touches[0].clientX-camera.xo)/camera.zoom;
-      camera.y += (e.touches[0].clientY-camera.yo)/camera.zoom;
+      camera.x += (e.touches[0].clientX-camera.xo)/camera.z;
+      camera.y += (e.touches[0].clientY-camera.yo)/camera.z;
       camera.xo = e.touches[0].clientX;
       camera.yo = e.touches[0].clientY;
     }
   }
-  tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+  sett();
 });
+
 screen.addEventListener("mousedown",(e) => {
   camera.drag = true;
   camera.xo = e.clientX;
@@ -334,11 +344,11 @@ screen.addEventListener("mousedown",(e) => {
 });
 screen.addEventListener("mousemove",(e) => {
   if (camera.drag) {
-    camera.x += (e.clientX-camera.xo)/camera.zoom;
-    camera.y += (e.clientY-camera.yo)/camera.zoom;
+    camera.x += (e.clientX-camera.xo)/camera.z;
+    camera.y += (e.clientY-camera.yo)/camera.z;
     camera.xo = e.clientX;
     camera.yo = e.clientY;
-    tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+    sett();
   }
 });
 screen.addEventListener("mouseup",() => {
@@ -349,12 +359,13 @@ screen.addEventListener("mouseleave",() => {
 });
 screen.addEventListener("wheel",(e) => {
   e.preventDefault();
-  if (e.deltaY < 0) {
-    camera.zoom *= (1.125);
-  } else {
-    camera.zoom *= (0.875);
-  }
-  tree.style.transform = "scale("+camera.zoom+") translateX("+camera.x+"px) translateY("+camera.y+"px)";
+  const mx = e.clientX-screen.clientWidth/2;
+  const my = e.clientY-screen.clientHeight/2;
+  const nz = Math.max(Math.min(camera.z*(e.deltaY<0?1.125:0.875),camera.min),camera.max);
+  camera.x -= (mx/camera.z-mx/nz);
+  camera.y -= (my/camera.z-my/nz);
+  camera.z = nz;
+  sett();
 });
 
 </script>
