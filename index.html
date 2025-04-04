@@ -34,7 +34,7 @@
   background-color: var(--md-sys-color-background);
   width: 100%;
   height: 72px;
-  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  outline: 1px solid var(--md-sys-color-outline-variant);
 }
 .bar .content {
   display: flex;
@@ -64,17 +64,17 @@
   border-radius: 16px;
 }
 
-.body .content:nth-child(2) {
+.body .content:nth-child(3) {
   overflow: hidden;
   height: 100%;
   padding: 0;
 }
-.body .content:nth-child(2).active {
+.body .content:nth-child(3).active {
   position: relative;
   display: flex;
   flex-direction: column;
 }
-.body .content:nth-child(2) .user {
+.body .content:nth-child(3) .user {
   width: 100%;
   height: 64px;
   border: 1px solid var(--md-sys-color-surface-dim);
@@ -100,7 +100,7 @@
   font-size: 12px;
   line-height: 1;
   border-radius: 16px;
-  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  outline: 1px solid var(--md-sys-color-outline-variant);
   transition: transform 0.125s ease;
   cursor: pointer;
 }
@@ -172,7 +172,7 @@
   margin: 6px;
   padding: 2px;
   border-radius: 5px;
-  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  outline: 1px solid var(--md-sys-color-outline-variant);
   transition: transform 0.125s ease;
   cursor: pointer;
 }
@@ -214,7 +214,7 @@
   width: 100%;
   resize: none;
   font-size: 1em;
-  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  outline: 1px solid var(--md-sys-color-outline-variant);
   border-radius: 8px;
   padding: 10px;
   margin: 4px;
@@ -233,7 +233,7 @@
   padding: 8px;
   margin: 4px;
   border-radius: 8px;
-  box-shadow: 0 0 0 1px var(--md-sys-color-surface-dim);
+  outline: 1px solid var(--md-sys-color-outline-variant);
 }
 #send_message:active {
   transform: scale(0.875);
