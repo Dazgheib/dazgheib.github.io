@@ -3,9 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#f3ebfa">
+  <!--meta name="theme-color" content="#f3ebfa"-->
   <base href="/assets/">
   <link rel="stylesheet" href="https://nxrix.github.io/assets/css/style.css">
+  <script src="https://nxrix.github.io/assets/js/theme.js"></script>
+  <script src="./js/screen.js"></script>
   <script src="./js/buffer.js"></script>
   <script src="./js/bitcoinjs-lib.js"></script>
   <script src="./js/noble-secp256k1.js"></script>
@@ -268,6 +270,7 @@
         </li>
       </ul>
       <button id="btn_logout" style="width:90%;margin:0 5%;display:none;">خروج</button>
+      <div id="theme_btn" onclick="change_theme()" style="height:40px;width:90%;margin:8px 5%"></div>
     </div>
   </div>
   <div class="bar">
@@ -287,7 +290,6 @@
     </div>
   </div>
 </body>
-<script src="./js/screen.js"></script>
 <script src="./js/script.js"></script>
 <script>
 const fullscreen = () => {
