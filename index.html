@@ -54,8 +54,8 @@
   cursor: pointer;
 }
 .bar .content div.active svg {
-  background-color: var(--md-sys-color-on-surface);
-  color: var(--md-sys-color-background);
+  background-color: var(--md-sys-color-secondary-container);
+  color: var(--md-sys-color-secondary);
 }
 .bar svg {
   width: 100%;
@@ -334,7 +334,7 @@ const events = [
   { event: "کنکور تیر 1405"    , time: "2026-06-26T08:00:00+03:30" }
 ];
 
-const update_events = (e,r) => {
+const update_event = (e,r) => {
   const s = Math.floor(r/(1000         ))%60;
   const m = Math.floor(r/(1000*60      ))%60;
   const h = Math.floor(r/(1000*60*60   ))%24;
