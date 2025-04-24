@@ -11,10 +11,19 @@
   <title>دضغیب : {{ page.title }}</title>
 </head>
 <body>
-  <div class="body">
+  <div class="top_bar">
     <div class="content">
-      {{ content }}
-      <div id="theme_btn" onclick="change_theme()" style="height:40px;width:90%;margin:8px 5%"></div>
+      <a href="../">
+        دضغیب
+      </a>
+    </div>
+  </div>
+  <div class="body">
+    <div class="scroll_wrapper"></div>
+      <div class="content">
+        {{ content }}
+        <div id="theme_btn" onclick="change_theme()" style="height:40px;width:90%;margin:8px 5%"></div>
+      </div>
     </div>
   </div>
 </body>
