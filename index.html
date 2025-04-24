@@ -254,9 +254,9 @@ layout: empty
         {% for post in sorted_posts %}
           {% unless post.hidden %}
           <a href="{{ post.rdurl | default: post.url }}" class="cart">
-            {% unless post.image %}
+            {% if post.image %}
             <img class="pixelated" src="./img/carts/{{ post.image }}">
-            {% endunless %}
+            {% endif %}
             <div class="content">
               <div class="title">{{ post.title }}</div>
               <div class="description">{{ post.description }}</div>
