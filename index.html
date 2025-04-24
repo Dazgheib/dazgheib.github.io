@@ -245,7 +245,23 @@
   <div class="body">
     <div class="content">
       <h2>دضغیب</h2>
-      <h3>تاریخ ها</h3>
+      <div class="cart_set">
+        {% assign sorted_posts = site.pages | sort: "cid" | reverse %}
+        {% for post in sorted_posts %}
+          {% unless post.hidden %}
+          <a href="{{ post.rdurl | default: post.url }}" class="cart">
+            {% unless post.image %}
+            <img class="pixelated" src="./img/carts/{{ post.image }}">
+            {% endunless %}
+            <div class="content">
+              <div class="title">{{ post.title }}</div>
+              <div class="description">{{ post.description }}</div>
+            </div>
+          </a>
+          {% endunless %}
+        {% endfor %}
+      </div>
+      <h3>کنکور ها</h3>
       <div id="events_list" style="display:grid;gap:8px"></div>
     </div>
     <div class="content" style="max-width:100%;height:100%;padding:0;overflow:hidden">
@@ -266,11 +282,11 @@
       <button id="sk_set" style="width:90%;margin:0 5%;margin-top:8px;">ورود</button>
       <div id="sk_anon" style="cursor:pointer;margin-top:8px;margin-right:6%;margin-bottom:16px;color:var(--md-sys-color-primary);text-decoration:underline;">ادامه به صورت ناشناس</div>
       <div id="user_info"></div>
-      <ul dir="auto">
+      <!--ul dir="auto">
         <li>
           به پسری که اسپم میکنه چی میگن؟
         </li>
-      </ul>
+      </ul-->
       <button id="btn_logout" style="width:90%;margin:0 5%;display:none;">خروج</button>
       <div id="theme_btn" onclick="change_theme()" style="height:40px;width:90%;margin:8px 5%"></div>
     </div>

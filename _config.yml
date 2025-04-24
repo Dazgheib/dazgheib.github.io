@@ -1,0 +1,5 @@
+theme: null
+permalink: pretty
+collections:
+  pages:
+    output: true
