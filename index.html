@@ -361,7 +361,7 @@ const update_event = (e,r) => {
   const h = Math.floor(r/(1000*60*60   ))%24;
   const d = Math.floor(r/(1000*60*60*24));
   e.querySelector( ".day").textContent = d+" Days";
-  e.querySelector(".hour").textContent = h.padStart(2,"0")+":"+m.padStart(2,"0")+":"+s.padStart(2,"0");
+  e.querySelector(".hour").textContent = h.toString().padStart(2,"0")+":"+m.toString().padStart(2,"0")+":"+s.toString().padStart(2,"0");
   //e.querySelector(".hour").textContent = h;
   //e.querySelector( ".min").textContent = m;
   //e.querySelector( ".sec").textContent = s;
