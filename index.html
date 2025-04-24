@@ -3,7 +3,7 @@ layout: empty
 ---
 
 <!DOCTYPE html>
-<html dir="rtl">
+<html>
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -249,7 +249,7 @@ layout: empty
   <div class="body">
     <div class="content page" style="max-width:min(100%,980px);">
       <h2>دضغیب</h2>
-      <div class="cart_set">
+      <div class="cart_set" dir="rtl">
         {% assign sorted_posts = site.pages | sort: "cid" | reverse %}
         {% for post in sorted_posts %}
           {% unless post.hidden %}
