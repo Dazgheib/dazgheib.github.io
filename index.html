@@ -361,9 +361,10 @@ const update_event = (e,r) => {
   const h = Math.floor(r/(1000*60*60   ))%24;
   const d = Math.floor(r/(1000*60*60*24));
   e.querySelector( ".day").textContent = d+" Days";
-  e.querySelector(".hour").textContent = h;
-  e.querySelector( ".min").textContent = m;
-  e.querySelector( ".sec").textContent = s;
+  e.querySelector(".hour").textContent = h.padStart(2,"0")+":"+m.padStart(2,"0")+":"+s.padStart(2,"0");
+  //e.querySelector(".hour").textContent = h;
+  //e.querySelector( ".min").textContent = m;
+  //e.querySelector( ".sec").textContent = s;
 }
 
 events.forEach(e => {
@@ -381,17 +382,17 @@ events.forEach(e => {
   day.classList.add("day");
   const hour = document.createElement("div");
   hour.classList.add("hour");
-  const min = document.createElement("div");
-  min.classList.add("min");
-  const sec = document.createElement("div");
-  sec.classList.add("sec");
+  //const min = document.createElement("div");
+  //min.classList.add("min");
+  //const sec = document.createElement("div");
+  //sec.classList.add("sec");
   time.appendChild(day);
   time.appendChild(document.createTextNode("-"));
   time.appendChild(hour);
-  time.appendChild(document.createTextNode(":"));
-  time.appendChild(min);
-  time.appendChild(document.createTextNode(":"));
-  time.appendChild(sec);
+  //time.appendChild(document.createTextNode(":"));
+  //time.appendChild(min);
+  //time.appendChild(document.createTextNode(":"));
+  //time.appendChild(sec);
 
   event.appendChild(time);
   events_list.appendChild(event);
