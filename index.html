@@ -244,6 +244,9 @@ layout: empty
 #send_message:active {
   transform: scale(0.875);
 }
+.cart_set {
+  grid-template-columns: 1fr;
+}
 </style>
 <body>
   <div class="body">
@@ -350,9 +353,9 @@ set_tab(0);
 <script>
 
 const events = [
-  { event: "کنکور اردیبهشت 1404", time: "2025-05-01T08:00:00+03:30" },
-  { event: "کنکور تیر 1404"    , time: "2025-06-26T08:00:00+03:30" },
-  { event: "کنکور تیر 1405"    , time: "2026-07-02T08:00:00+03:30" }
+  { event: "اردیبهشت 1404", time: "2025-05-01T08:00:00+03:30" },
+  { event: "تیر 1404"    , time: "2025-06-26T08:00:00+03:30" },
+  { event: "تیر 1405"    , time: "2026-07-02T08:00:00+03:30" }
 ];
 
 const update_event = (e,r) => {
