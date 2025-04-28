@@ -14,5 +14,6 @@ description: "لینک آزمون های تاریخ یازدهم"
 * درس 11 و 12 - [Link](https://forms.gle/K5zE5cdJA2YWpio8A)
 * درس 13 - [Link](https://forms.gle/b3RRDWQegRmdmci7A)
 * درس 14 و 15 - [Link](https://forms.gle/A73fDN6febCE9QvN8)
+* درس 16 و 17 - [Link](https://forms.gle/aQCdjrKT9C81nGXM8)
 
 [کانال استاد نوروزی](https://t.me/farzadnorouzy11)
