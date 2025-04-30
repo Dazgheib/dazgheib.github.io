@@ -389,7 +389,7 @@ const load_elements_fix = () => {
   sk_anon.style.display = "none";
   btn_logout.style.display = "block";
   const u = users.find(u=>u.pk==user.pk);
-  user_info.innerText = "وارد شده به عنوان "+(u?(u.name:(user.pk.substr(0,4)+".."+user.pk.substr(-4)+" ("+user.name+")"));
+  user_info.innerText = "وارد شده به عنوان "+(u?u.name:(user.pk.substr(0,4)+".."+user.pk.substr(-4)+" ("+user.name+")"));
 }
 
 const disload_elements_fix = () => {
