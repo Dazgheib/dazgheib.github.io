@@ -442,7 +442,7 @@ sk_anon.onclick = () => {
       localStorage.setItem("user",JSON.stringify(user));
       load_elements_fix();
     } else {
-      alert("اسم باید بیش از 2 حرف باشد");
+      alert("اسم باید بیش از 2 حرف باشه");
     }
   } catch(err) {
     alert("Error");
@@ -556,9 +556,8 @@ const load_messages = () => {
     name.innerText = (messages[i].pubkey==user.pk?"You":messages[i].pubkey);
     const u = users.find(u=>u.pk==messages[i].pubkey)
     if (u) {
-      const icon = u.path.split(":")[2]=="0"?"":"<div class=\"name_icon\" style=\"background-image:url('./img/icons/3.png')\">";
       name.innerText = (u.name||(messages[i].pubkey==user.pk?"You":messages[i].pubkey));
-      name.innerHTML += icon
+      name.innerHTML += "<div class=\"name_icon\" style=\"background-image:url('./img/icons/"+u.path.split(":")[2]+".png')\">";
     } else {
       //const str = messages[i].content;
       //const index = str.indexOf("\n");
