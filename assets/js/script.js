@@ -504,14 +504,14 @@ const delete_msg = async (id) => {
     const event = {
       "content": "",
       "created_at": Math.floor(Date.now()/1000),
-      "kind": 999,
+      "kind": 5,
       "tags": [["e",id]],
       "pubkey": user.pk
     };
     const signed = await sign(event,user.sk);
     socket.send(JSON.stringify(["EVENT",signed]));
     const index = messages.findIndex(message=>message.id==id);
-    if (index!==-1) {
+    if (index!=-1) {
       messages.splice(index,1);
     }
     load_messages();
@@ -570,7 +570,7 @@ const load_messages = () => {
     }
     message.appendChild(name);
 
-    if (messages[i].pubkey==user.pk) {
+    /*if (messages[i].pubkey==user.pk) {
       const delete_div = document.createElement("div");
       delete_div.classList.add("delete");
       delete_div.setAttribute("onclick",`delete_msg("${messages[i].id}")`);
@@ -579,7 +579,7 @@ const load_messages = () => {
       delete_img.src = "./svg/close.svg";
       delete_div.appendChild(delete_img);
       message.appendChild(delete_div);
-    }
+    }*/
 
     const text = document.createElement("div");
     text.classList.add("text");
