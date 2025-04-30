@@ -570,7 +570,7 @@ const load_messages = () => {
     }
     message.appendChild(name);
 
-    /*if (messages[i].pubkey==user.pk) {
+    if (messages[i].pubkey==user.pk) {
       const delete_div = document.createElement("div");
       delete_div.classList.add("delete");
       delete_div.setAttribute("onclick",`delete_msg("${messages[i].id}")`);
@@ -579,7 +579,7 @@ const load_messages = () => {
       delete_img.src = "./svg/close.svg";
       delete_div.appendChild(delete_img);
       message.appendChild(delete_div);
-    }*/
+    }
 
     const text = document.createElement("div");
     text.classList.add("text");
