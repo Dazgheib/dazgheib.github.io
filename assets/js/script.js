@@ -104,7 +104,8 @@ message_footer.style.height = message_input.scrollHeight*1.625+"px";
 
 send_message.onclick = () => {
   if (message_input.value.trim().length>0) {
-    if (kind0s[user.pk]) {
+    const u = users.find(u=>u.pk==user.pk);
+    if (u) {
       fix = "";
     } else {
       fix = user.name+"\n";
