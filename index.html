@@ -368,40 +368,42 @@ const update_event = (e,r) => {
 }
 
 events.forEach(e => {
-  const event = document.createElement("div");
-  event.classList.add("timer");
-  event.setAttribute("dir","rtl");
-  const name = document.createElement("div");
-  name.classList.add("name");
-  name.textContent = e.event;
-  event.appendChild(name);
-  const time = document.createElement("div");
-  time.classList.add("time");
-  time.setAttribute("dir","ltr");
-  const day = document.createElement("div");
-  day.classList.add("day");
-  const hour = document.createElement("div");
-  hour.classList.add("hour");
-  hour.setAttribute("style","width:max-content;aspect-ratio:auto;padding:0 8px");
-  //const min = document.createElement("div");
-  //min.classList.add("min");
-  //const sec = document.createElement("div");
-  //sec.classList.add("sec");
-  time.appendChild(day);
-  time.appendChild(document.createTextNode("-"));
-  time.appendChild(hour);
-  //time.appendChild(document.createTextNode(":"));
-  //time.appendChild(min);
-  //time.appendChild(document.createTextNode(":"));
-  //time.appendChild(sec);
+  if (new Date(e.time)-new Date>0) {
+    const event = document.createElement("div");
+    event.classList.add("timer");
+    event.setAttribute("dir","rtl");
+    const name = document.createElement("div");
+    name.classList.add("name");
+    name.textContent = e.event;
+    event.appendChild(name);
+    const time = document.createElement("div");
+    time.classList.add("time");
+    time.setAttribute("dir","ltr");
+    const day = document.createElement("div");
+    day.classList.add("day");
+    const hour = document.createElement("div");
+    hour.classList.add("hour");
+    hour.setAttribute("style","width:max-content;aspect-ratio:auto;padding:0 8px");
+    //const min = document.createElement("div");
+    //min.classList.add("min");
+    //const sec = document.createElement("div");
+    //sec.classList.add("sec");
+    time.appendChild(day);
+    time.appendChild(document.createTextNode("-"));
+    time.appendChild(hour);
+    //time.appendChild(document.createTextNode(":"));
+    //time.appendChild(min);
+    //time.appendChild(document.createTextNode(":"));
+    //time.appendChild(sec);
 
-  event.appendChild(time);
-  events_list.appendChild(event);
-  update_event(event,0);
-  const timer = new Timer(e.time);
-  timer.start((data) => {
-    update_event(event,data.remaining);
-  });
+    event.appendChild(time);
+    events_list.appendChild(event);
+    update_event(event,0);
+    const timer = new Timer(e.time);
+    timer.start((data) => {
+      update_event(event,data.remaining);
+    });
+  }
 });
 
 </script>
