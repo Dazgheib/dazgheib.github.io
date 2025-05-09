@@ -129,7 +129,7 @@ const users = [
     "pk": "1c575697ab02043dbbf09aa8ce13949705fefb9c5028ee06706c8b05d1ebfad4"
   },
   {
-    "name": "دضغیب."
+    "name": "دضغیب.",
     "path": "dazgheib:0:0:0",
     "pk": "13b2f952d3f0eefe01214113ac47def4ded519678a3ddd086d66a6e64ff2332a"
   },
