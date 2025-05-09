@@ -97,10 +97,10 @@ const copy_text = (text) => {
 
 message_input.addEventListener("input",() => {
   message_footer.style.height = "0";
-  message_footer.style.height = message_input.scrollHeight*1.625+"px";
+  message_footer.style.height = message_input.scrollHeight*1.675+"px";
 });
 message_footer.style.height = "0";
-message_footer.style.height = message_input.scrollHeight*1.625+"px";
+message_footer.style.height = message_input.scrollHeight*1.675+"px";
 
 send_message.onclick = () => {
   if (message_input.value.trim().length>0) {
