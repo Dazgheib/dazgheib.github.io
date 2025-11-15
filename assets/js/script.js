@@ -965,6 +965,11 @@ const load_messages = () => {
       const delete_div = document.createElement("div");
       delete_div.classList.add("delete");
       delete_div.setAttribute("onclick",`delete_msg("${messages[i].id}")`);
+      if (/[\u0591-\u07FF\uFB1D-\uFDFD\uFE70-\uFEFC]/.test(name.innerText.trim()[0])) {
+        delete_div.style.left = 0;
+      } else {
+        delete_div.style.right = 0;
+      }
       const delete_img = document.createElement("img");
       delete_img.setAttribute("draggable","false");
       delete_img.src = "./svg/close.svg";
@@ -1037,4 +1042,3 @@ if (user!={}) {
     load_elements_fix();
   } catch(err) {}
 }
-
