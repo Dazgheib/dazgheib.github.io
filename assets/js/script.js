@@ -972,7 +972,7 @@ const load_messages = () => {
       }
       const delete_img = document.createElement("img");
       delete_img.setAttribute("draggable","false");
-      delete_img.src = "./svg/close.svg";
+      delete_img.src = "./img/svg/close.svg";
       delete_div.appendChild(delete_img);
       message.appendChild(delete_div);
     }
@@ -1042,3 +1042,4 @@ if (user!={}) {
     load_elements_fix();
   } catch(err) {}
 }
+
