@@ -970,10 +970,7 @@ const load_messages = () => {
       } else {
         delete_div.style.right = 0;
       }
-      const delete_img = document.createElement("img");
-      delete_img.setAttribute("draggable","false");
-      delete_img.src = "./img/svg/close.svg";
-      delete_div.appendChild(delete_img);
+      delete_div.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" height="24px" viewBox="0 -960 960 960" width="24px" fill="currentColor"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>`;
       message.appendChild(delete_div);
     }
 
@@ -1042,4 +1039,5 @@ if (user!={}) {
     load_elements_fix();
   } catch(err) {}
 }
+
 
